@@ -14,15 +14,15 @@ RUN apt-get update && \
     chmod +x /usr/local/bin/oc /usr/local/bin/kubectl && \
     mkdir -p /etc/webhook && \
     echo "[]" > /etc/webhook/hooks.json && \
-    apt-get purge -y curl bash git && \
+    apt-get purge -y --allow-remove-essential curl git && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/* /usr/share/doc /usr/share/man /usr/share/locale /var/cache/*
 
-RUN groupadd -g 65535 webhook && \
-    useradd -u 65535 -g 65535 -s /usr/sbin/nologin -d /nonexistent webhook && \
+RUN groupadd -g 60000 webhook && \
+    useradd -u 60000 -g 60000 -s /usr/sbin/nologin -d /nonexistent webhook && \
     chown -R webhook:webhook /etc/webhook
 
-USER 65535:65535
+USER 60000:60000
 
 VOLUME ["/etc/webhook"]
 
